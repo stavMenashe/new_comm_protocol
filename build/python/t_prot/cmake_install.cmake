@@ -43,13 +43,21 @@ if(NOT DEFINED CMAKE_OBJDUMP)
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/python3.12/dist-packages/gnuradio/t_prot" TYPE FILE FILES "/home/sdr/Documents/Gali_and_Stav/gr-t_prot/python/t_prot/__init__.py")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/python3.12/dist-packages/gnuradio/t_prot" TYPE FILE FILES
+    "/home/sdr/Documents/Gali_and_Stav/gr-t_prot/python/t_prot/__init__.py"
+    "/home/sdr/Documents/Gali_and_Stav/gr-t_prot/python/t_prot/t_modulator.py"
+    "/home/sdr/Documents/Gali_and_Stav/gr-t_prot/python/t_prot/t_demodulator.py"
+    )
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/python3.12/dist-packages/gnuradio/t_prot" TYPE FILE FILES
     "/home/sdr/Documents/Gali_and_Stav/gr-t_prot/build/python/t_prot/__init__.pyc"
+    "/home/sdr/Documents/Gali_and_Stav/gr-t_prot/build/python/t_prot/t_modulator.pyc"
+    "/home/sdr/Documents/Gali_and_Stav/gr-t_prot/build/python/t_prot/t_demodulator.pyc"
     "/home/sdr/Documents/Gali_and_Stav/gr-t_prot/build/python/t_prot/__init__.pyo"
+    "/home/sdr/Documents/Gali_and_Stav/gr-t_prot/build/python/t_prot/t_modulator.pyo"
+    "/home/sdr/Documents/Gali_and_Stav/gr-t_prot/build/python/t_prot/t_demodulator.pyo"
     )
 endif()
 

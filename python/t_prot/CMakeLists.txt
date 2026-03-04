@@ -19,7 +19,7 @@ add_subdirectory(bindings)
 ########################################################################
 # Install python sources
 ########################################################################
-gr_python_install(FILES __init__.py t_modulator.py DESTINATION ${GR_PYTHON_DIR}/gnuradio/t_prot)
+gr_python_install(FILES __init__.py t_modulator.py t_demodulator.py DESTINATION ${GR_PYTHON_DIR}/gnuradio/t_prot)
 
 ########################################################################
 # Handle the unit tests

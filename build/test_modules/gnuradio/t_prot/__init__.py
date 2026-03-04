@@ -20,4 +20,6 @@ except ModuleNotFoundError:
     pass
 
 # import any pure python here
+from .t_modulator import t_modulator
+from .t_demodulator import t_demodulator
 #

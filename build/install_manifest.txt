@@ -1,5 +1,13 @@
 /usr/local/lib/cmake/gnuradio-t_prot/gnuradio-t_protConfig.cmake
 /usr/local/include/gnuradio/t_prot/api.h
 /usr/local/lib/python3.12/dist-packages/gnuradio/t_prot/__init__.py
+/usr/local/lib/python3.12/dist-packages/gnuradio/t_prot/t_modulator.py
+/usr/local/lib/python3.12/dist-packages/gnuradio/t_prot/t_demodulator.py
 /usr/local/lib/python3.12/dist-packages/gnuradio/t_prot/__init__.pyc
+/usr/local/lib/python3.12/dist-packages/gnuradio/t_prot/t_modulator.pyc
+/usr/local/lib/python3.12/dist-packages/gnuradio/t_prot/t_demodulator.pyc
 /usr/local/lib/python3.12/dist-packages/gnuradio/t_prot/__init__.pyo
+/usr/local/lib/python3.12/dist-packages/gnuradio/t_prot/t_modulator.pyo
+/usr/local/lib/python3.12/dist-packages/gnuradio/t_prot/t_demodulator.pyo
+/usr/local/share/gnuradio/grc/blocks/t_prot_t_modulator.block.yml
+/usr/local/share/gnuradio/grc/blocks/t_prot_t_demodulator.block.yml

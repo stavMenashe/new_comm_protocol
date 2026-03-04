@@ -7,4 +7,5 @@
 #
 
 install(FILES
-    t_prot_t_modulator.block.yml DESTINATION share/gnuradio/grc/blocks)
+    t_prot_t_modulator.block.yml
+    t_prot_t_demodulator.block.yml DESTINATION share/gnuradio/grc/blocks)
