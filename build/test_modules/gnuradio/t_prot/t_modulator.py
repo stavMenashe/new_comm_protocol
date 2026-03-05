@@ -31,7 +31,7 @@ class t_modulator(gr.sync_block):
         # take the bits out of the given string.
         bits = ''.join(format(ord(i), '08b') for i in self.text)
         
-        for i in range(self.t * self.Fs):
+        for i in range(int(self.t * self.Fs)):
             self.mod_str.put(-1) # preamble
 
         for bit in bits:

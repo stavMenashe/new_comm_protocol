@@ -78,7 +78,7 @@ class t_demodulator(gr.sync_block):
         index = 0
     
         if self.in_msg == False:
-            index = self.find_msg(in0) - 1
+            index = self.find_msg(in0)
         if self.in_msg == True:
             if not (index == -1):
                 self.decode_message(in0[index:])
