@@ -23,14 +23,27 @@ class t_demodulator(gr.sync_block):
         self.Fs = Fs
         self.epsilon = epsilon
         self.timeout = timeout
+        self.in_msg = False
+        self.last_samples = []
 
-    def detect_message(self, message):
+    def decode_message(self, samps):
+        message = numpy.concatenate((self.last_samples, samps), axis=0)
+        ch_len = int(self.Fs * self.t) * 8 * 3
+        
+        while len(message) >= ch_len:
+            self.decode_packet(message[:ch_len])
+            message = message[ch_len - 1:]
+            
+        self.last_samples = message
+                
+    def decode_packet(self, message):
         index = 0
-        jumps = self.Fs * self.t
+        jumps = int(self.Fs * self.t)
         curr_ch = ""
         size = 0
         count_fails = 0
-        while index < len(message):
+
+        while index + jumps + jumps < len(message):
             symb0 = message[index]
             index += jumps
             symb1 = message[index]
@@ -47,6 +60,7 @@ class t_demodulator(gr.sync_block):
                 count_fails += 1
                 curr_ch += "0"
                 if count_fails >= self.timeout:
+                    self.in_msg = False
                     break
             
             size += 1
@@ -61,14 +75,24 @@ class t_demodulator(gr.sync_block):
 
     def work(self, input_items, output_items):
         in0 = input_items[0]
-        prev = in0[0]
-        index = 1
-        while index < len(in0):
-            curr = in0[index]
-            if abs(curr - prev) > self.epsilon:
-                self.detect_message(in0[index:])
-                break
-            index += 1
-            prev = curr
+        index = 0
+    
+        if self.in_msg == False:
+            index = self.find_msg(in0) - 1
+        if self.in_msg == True:
+            if not (index == -1):
+                self.decode_message(in0[index:])
             
         return len(input_items[0])
+    
+    def find_msg(self, samples):
+        prev = samples[0]
+        index = 0
+        while index < len(samples):
+            curr = samples[index]
+            if abs(curr - prev) > self.epsilon:
+                self.in_msg = True
+                return index
+            index += 1
+            prev = curr
+        return -1
