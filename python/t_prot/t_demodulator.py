@@ -25,6 +25,8 @@ class t_demodulator(gr.sync_block):
         self.timeout = timeout
         self.in_msg = False
         self.last_samples = []
+        self.start_vec = []
+        self.end_vec = []
 
     def decode_message(self, samps):
         message = numpy.concatenate((self.last_samples, samps), axis=0)
@@ -50,13 +52,14 @@ class t_demodulator(gr.sync_block):
             index += jumps
             symb2 = message[index]
             
-            if symb0 == 1 and symb1 == -1 and symb2 == -1:
+            if symb0 > 1 and symb1 < 1 and symb2 < 1:
                 curr_ch += "0"
                 count_fails = 0
-            elif symb0 == 1 and symb1 == 1 and symb2 == -1:
+            elif symb0 > 1 and symb1 > 1 and symb2 < 1:
                 curr_ch += "1"
                 count_fails = 0
             else:
+                print("failed")
                 count_fails += 1
                 curr_ch += "0"
                 if count_fails >= self.timeout:
@@ -86,13 +89,25 @@ class t_demodulator(gr.sync_block):
         return len(input_items[0])
     
     def find_msg(self, samples):
+        ch_len = int((int(self.Fs * self.t) * 8 * 3) / 500)
+        
         prev = samples[0]
         index = 0
+        
         while index < len(samples):
-            curr = samples[index]
-            if abs(curr - prev) > self.epsilon:
-                self.in_msg = True
-                return index
+            if len(self.start_vec) == ch_len and len(self.end_vec) == ch_len:
+                if abs(numpy.mean(self.start_vec) - numpy.mean(self.end_vec)) > self.epsilon:
+                    self.in_msg = True
+                    return index
+                else:
+                    self.start_vec = numpy.delete(self.start_vec, 0)
+                    self.end_vec = numpy.append(self.end_vec, samples[index])
+                    self.start_vec = numpy.append(self.start_vec, self.end_vec[0])
+                    self.end_vec = numpy.delete(self.end_vec, 0)
+                    
+            elif len(self.start_vec) < ch_len:
+                self.start_vec = numpy.append(self.start_vec, samples[index])
+            elif len(self.end_vec) < ch_len:
+                self.end_vec = numpy.append(self.end_vec, samples[index])
             index += 1
-            prev = curr
         return -1
